@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Golang net http server
+title: Golang net/http 源码阅读
 slug: golang-net-http-server
 ---
 
-- [Net HTTP Server](#net-http-server)
+- [Net/HTTP Server](#net-http-server)
   - [使用 net/http 启动一个 web server](#使用-nethttp-启动一个-web-server)
   - [How](#how)
 
