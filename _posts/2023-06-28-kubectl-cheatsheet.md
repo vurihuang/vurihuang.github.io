@@ -4,6 +4,22 @@ title: Kubectl 速查表
 slug: kubectl-cheatsheet
 ---
 
+
+<!-- vim-markdown-toc GFM -->
+
+* [Node](#node)
+  * [查看Node资源使用情况](#查看node资源使用情况)
+  * [获取指定Node上的pod列表](#获取指定node上的pod列表)
+  * [获取节点总可用资源](#获取节点总可用资源)
+* [Pod](#pod)
+  * [设置Pod 调度策略](#设置pod-调度策略)
+    * [Pod 亲和性](#pod-亲和性)
+      * [硬亲和（requiredDuringSchedulingIngoredExecution）](#硬亲和requiredduringschedulingingoredexecution)
+      * [软亲和（preferredDuringSchedulingIgnoredExecution）](#软亲和preferredduringschedulingignoredexecution)
+    * [Pod 反亲和性](#pod-反亲和性)
+
+<!-- vim-markdown-toc -->
+
 ## Node
 
 ### 查看Node资源使用情况
@@ -35,3 +51,40 @@ NODE                    ALLOCATABLE CPU   ALLOCATABLE MEMORY
 172.16.193.199          15890m            30121540Ki
 172.16.193.75           15600m            28262728Ki
 ```
+
+## Pod
+
+### 设置Pod 调度策略
+
+#### Pod 亲和性
+
+##### 硬亲和（requiredDuringSchedulingIngoredExecution）
+
+``` yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+          - key: foo
+            operator: In
+            values:
+            - bar
+```
+
+##### 软亲和（preferredDuringSchedulingIgnoredExecution）
+
+``` yaml
+affinity:
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - preference:
+        matchExpressions:
+        - key: foo
+          operator: In
+          values:
+          - ""
+      weight: 100
+```
+
+#### Pod 反亲和性

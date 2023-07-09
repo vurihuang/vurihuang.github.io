@@ -4,6 +4,11 @@ title: Makefile 速查表
 slug: makefile-cheatsheet
 ---
 
+<!-- vim-markdown-toc GFM -->
+
+* [Missing separator](#missing-separator)
+
+<!-- vim-markdown-toc -->
 
 ## Missing separator
 
