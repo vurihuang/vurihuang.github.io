@@ -2,7 +2,6 @@
 layout: post
 title: Command cheatsheet
 slug: command-cheatsheet
-date: 2023-06-28 17:54:12
 ---
 
 <!-- vim-markdown-toc GFM -->
