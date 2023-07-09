@@ -2,7 +2,6 @@
 layout: post
 title: Kubectl 速查表
 slug: kubectl-cheatsheet
-date: 2023-07-09 17:54:41
 ---
 
 <!-- vim-markdown-toc GFM -->
