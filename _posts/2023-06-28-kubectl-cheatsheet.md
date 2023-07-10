@@ -10,6 +10,7 @@ slug: kubectl-cheatsheet
   * [查看Node资源使用情况](#查看node资源使用情况)
   * [获取指定Node上的pod列表](#获取指定node上的pod列表)
   * [获取节点总可用资源](#获取节点总可用资源)
+  * [节点更新维护](#节点更新维护)
 * [Pod](#pod)
   * [设置Pod 调度策略](#设置pod-调度策略)
     * [Pod 亲和性](#pod-亲和性)
@@ -49,6 +50,19 @@ NODE                    ALLOCATABLE CPU   ALLOCATABLE MEMORY
 172.16.192.36           15600m            28262728Ki
 172.16.193.199          15890m            30121540Ki
 172.16.193.75           15600m            28262728Ki
+```
+
+### 节点更新维护
+
+``` sh
+# 1. 标记节点不可被调度
+$ kubectl cordon 172.16.192.36
+
+# 2.驱逐节点上的所有pod（除daemonset），并删除临时盘
+$ kubectl drain 172.16.192.36 --ignore-daemonsets --delete-emptydir-data
+
+# 3. 重新标记节点为可调度
+$ kubectl uncordon 172.16.192.36
 ```
 
 ## Pod
