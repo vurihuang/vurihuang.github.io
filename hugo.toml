@@ -1,5 +1,5 @@
 baseurl = "https://upeoe.github.io"
-title = "Upeoe's blog"
+title = "Vuri's blog"
 theme = "hugo-coder"
 languagecode = "en"
 defaultcontentlanguage = "en"
@@ -7,13 +7,13 @@ defaultcontentlanguage = "en"
 paginate = 20
 
 [markup.highlight]
-style = "github-dark"
+style = "dracula"
 
 [params]
-  author = "upeoe"
+  author = ""
   info = ""
-  description = "Upeoe's personal website"
-  keywords = "blog,developer,personal"
+  description = "Vuri's blog"
+  keywords = "blog,vuri"
   avatarurl = "images/avatar.jpg"
   #gravatar = "email@gmail.com"
 
