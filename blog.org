@@ -9,7 +9,7 @@
 :export_hugo_section: posts
 :end:
 
-** TODO Setup My Blog with Hugo and Org Mode
+** Setup My Blog with Hugo and Org Mode
 :properties:
 :export_file_name: setup-my-blog-with-hugo-and-org-mode
 :end:
@@ -17,7 +17,7 @@
 *** Install Hugo
 
 #+begin_src shell
-  $ brew install hugo
+  brew install hugo
 #+end_src
 
 ** TODO Emacs 之路
