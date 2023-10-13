@@ -51,6 +51,10 @@ style = "dracula"
   weight = 1
   url  = "posts/"
 [[menu.main]]
-  name = "About"
+  name = "Categories"
   weight = 2
+  url = "categories/"
+[[menu.main]]
+  name = "About"
+  weight = 4
   url = "https://github.com/upeoe/"

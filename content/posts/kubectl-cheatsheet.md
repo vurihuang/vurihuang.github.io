@@ -1,7 +1,8 @@
 +++
 title = "Kubectl 速查表"
 author = ["vuri"]
-lastmod = 2023-10-13T01:39:19+08:00
+lastmod = 2023-10-14T01:07:44+08:00
+categories = ["cheatsheet"]
 draft = false
 +++
 
