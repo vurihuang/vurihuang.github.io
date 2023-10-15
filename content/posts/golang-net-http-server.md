@@ -2,7 +2,8 @@
 title = "使用 net/http 启动一个 web server"
 author = ["vuri"]
 date = 2020-08-29
-lastmod = 2023-10-14T01:15:26+08:00
+lastmod = 2023-10-14T02:13:28+08:00
+categories = ["golang"]
 draft = false
 +++
 

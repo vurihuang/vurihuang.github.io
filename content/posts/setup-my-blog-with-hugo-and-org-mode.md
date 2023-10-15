@@ -1,7 +1,8 @@
 +++
 title = "Setup My Blog with Hugo and Org Mode"
 author = ["vuri"]
-lastmod = 2023-10-14T01:59:09+08:00
+lastmod = 2023-10-14T02:08:01+08:00
+tags = ["emacs", "orgmode"]
 draft = false
 +++
 
@@ -114,7 +115,7 @@ draft = true
 +++
 ```
 
-在文本中追加内容 `Hello World!` ，并启动 Hugo Server：
+在文本中追加内容 `hello world` ，启动 Hugo Server：
 
 ```shell
 $ echo 'hello world' >> content/posts/hello-world.md

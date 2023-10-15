@@ -2,7 +2,8 @@
 title = "Golang Context with value"
 author = ["vuri"]
 date = 2020-08-20
-lastmod = 2023-10-14T01:22:39+08:00
+lastmod = 2023-10-14T02:14:27+08:00
+categories = ["golang"]
 draft = false
 +++
 

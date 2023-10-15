@@ -1,7 +1,8 @@
 +++
 title = "Emacs 之路"
 author = ["vuri"]
-lastmod = 2023-10-14T01:23:09+08:00
+lastmod = 2023-10-15T18:54:44+08:00
+categories = ["emacs"]
 draft = true
 +++
 
@@ -26,7 +27,21 @@ draft = true
 ## Setup with spacemacs {#setup-with-spacemacs}
 
 ```shell
-brew install emacs
+# 下载 emacs
+$ brew install --cask emacs
+
+# 启用 spacemacs 作为 emacs 的加载入口
+$ git clone https://github.com/syl20bnr/spacemacs spacemacs.d
+$ ln -s ~/dotfiles/spacemacs.d ~/.emacs.d
+
+# 启动 emacs，下载依赖
+$ emacs -nw
+
+# 将 spacemacs 的启动配置存到到自定义的 dotfiles 下，方便统一管理
+$ mkdir -p ~/dotfiles/.emacs.d
+$ mv ~/.spacemacs* ~/dotfiles/.emacs.d
+$ ln -s ~/dotfiles/.emacs.d/.spacemacs ~/.spacemacs
+$ ln -s ~/dotfiles/.emacs.d/.spacemacs.env ~/.spacemacs.env
 ```
 
 
