@@ -12,345 +12,6 @@
 :export_hugo_section: posts
 :end:
 
-** Setup My Blog with Hugo and Org Mode                           :@emacs:emacs:orgmode:
-:properties:
-:export_file_name: setup-my-blog-with-hugo-and-org-mode
-:end:
-
-*** 安装 Hugo
-
-#+begin_src shell
-  $ brew install hugo
-#+end_src
-
-*** 项目初始化
-
-#+begin_src shell
-  $ hugo new site blog
-  $ cd blog; git init .
-  # 安装主题
-  $ git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder
-#+end_src
-
-*** 修改配置文件 hugo.toml
-
-#+begin_src toml
-baseurl = "http://www.example.com"
-title = "example"
-theme = "hugo-coder"
-languagecode = "en"
-defaultcontentlanguage = "en"
-
-paginate = 20
-
-[markup.highlight]
-style = "github-dark"
-
-[params]
-  author = "example"
-  info = ""
-  description = ""
-  keywords = "blog,developer,personal"
-  avatarurl = "images/avatar.jpg"
-  #gravatar = "john.doe@example.com"
-
-  faviconSVG = "/img/favicon.svg"
-  favicon_32 = "/img/favicon-32x32.png"
-  favicon_16 = "/img/favicon-16x16.png"
-
-  since = 2020
-
-  enableTwemoji = true
-
-  colorScheme = "auto"
-  hidecolorschemetoggle = false
-
-  # customCSS = ["css/custom.css"]
-  # customSCSS = ["scss/custom.scss"]
-  # customJS = ["js/custom.js"]
-
-[taxonomies]
-  category = "categories"
-  series = "series"
-  tag = "tags"
-  author = "authors"
-
-# Social links
-[[params.social]]
-  name = "Github"
-  icon = "fa fa-github fa-2x"
-  weight = 1
-  url = "https://github.com/example/"
-
-# Menu links
-[[menu.main]]
-  name = "Blog"
-  weight = 1
-  url  = "posts/"
-[[menu.main]]
-  name = "About"
-  weight = 2
-  url = "about/"
-#+end_src
-
-*** 创建第一篇 Hello World 文章
-
-#+begin_src shell
-  $ hugo new content posts/hello-world.md
-  $ cat content/posts/hello-world.md
-#+end_src
-
-显示如下内容：
-#+begin_src markdown
-  +++
-  title = 'Hello World'
-  date = 2023-10-14T01:31:21+08:00
-  draft = true
-  +++
-#+end_src
-
-在文本中追加内容 =hello world= ，启动 Hugo Server：
-
-#+begin_src shell
-  $ echo 'hello world' >> content/posts/hello-world.md
-  # 同时构建草稿文章
-  $ hugo server --buildDrafts
-  # ...
-  # Web Server is available at http://localhost:62743/ (bind address 127.0.0.1)
-  # ...
-#+end_src
-
-打开浏览器，访问 =http://localhost:62743/= ：
-
-file:static/images/hello-world.png
-
-** TODO Emacs 之路                                                 :@emacs:
-:properties:
-:export_file_name: the-way-to-emacs
-:end:
-
-*** Setup with spacemacs
-
-#+begin_src shell
-  # 下载 emacs
-  $ brew install --cask emacs
-
-  # 启用 spacemacs 作为 emacs 的加载入口
-  $ git clone https://github.com/syl20bnr/spacemacs spacemacs.d
-  $ ln -s ~/dotfiles/spacemacs.d ~/.emacs.d
-
-  # 启动 emacs，下载依赖
-  $ emacs -nw
-
-  # 将 spacemacs 的启动配置存到到自定义的 dotfiles 下，方便统一管理
-  $ mkdir -p ~/dotfiles/.emacs.d
-  $ mv ~/.spacemacs* ~/dotfiles/.emacs.d
-  $ ln -s ~/dotfiles/.emacs.d/.spacemacs ~/.spacemacs
-  $ ln -s ~/dotfiles/.emacs.d/.spacemacs.env ~/.spacemacs.env
-#+end_src
-
-*** Org mode
-
-**** 语法
-
------
-Refs:
-
-- [[https://orgmode.org/worg/org-syntax.html][org-syntax]]
-**** 如何创建代码段
-
-执行 ~, i b~ 弹出菜单选择框，再按 s ~s[src]~
-
-#+BEGIN_SRC org
-  ,#+BEGIN_SRC org
-  ,#+END_SRC
-#+END_SRC
-
-**** 如何编辑代码段
-
-~C-c '~ 进入编辑代码段界面， ~, c~ 保存修改， ~, k~ 撤销修改。
-
------
-Refs:
-- [[https://orgmode.org/manual/Structure-of-Code-Blocks.html][Structure of Code Blocks]]
-- [[https://andreyor.st/posts/2022-10-16-my-blogging-setup-with-emacs-and-org-mode/][setup-with-emacs-and-org-mode]]
-
-**** TOC
-
------
-Refs:
-[[https://orgmode.org/manual/Table-of-Contents.html][Table-of-Contents]]
-
-*** Markdown
-
-**** 生成 TOC
-
-执行 ~SPC SPC markdown-toc-generate-toc RET~
-
-**** 预览
-
-1. 安装 ~vmd~
-  #+begin_src shell
-    npm install -g vmd
-  #+end_src
-2. 配置实时预览引擎
-   #+begin_src emacs-lisp
-     dotspacemacs-configuration-layers '(
-       (markdown :variables markdown-live-preview-engine 'vmd))
-   #+end_src
-
-** Kubectl 速查表                                                  :@kubernetes:cheatsheet:
-:properties:
-:export_file_name: kubectl-cheatsheet
-:end:
-
-*** Node
-**** 查看 Node 资源使用情况
-
-#+begin_src shell
-  $ kubectl top node
-  NAME                    CPU(cores)   CPU%        MEMORY(bytes)   MEMORY%
-  172.16.192.36           1961m        12%         16885Mi         61%
-  172.16.193.199          839m         5%          8046Mi          27%
-  172.16.193.75           1915m        12%         10597Mi         38%
-#+end_src
-
-**** 获取指定Node上的pod列表
-
-#+begin_src shell
-  $ kubectl get po -A -o wide --field-selector spec.nodeName=172.16.192.36
-  NAMESPACE     NAME                   READY    STATUS    RESTARTS   AGE     IP               NODE            NOMINATED NODE   READINESS GATES
-  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
-  kube-system   node-local-dns-tqpkz   1/1      Running   0          2d7h    172.16.192.36    172.16.192.36   <none>           <none>
-  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
-#+end_src
-
-**** 获取节点总可用资源
-
-#+begin_src shell
-  $ kubectl get node -o=custom-columns="NODE:.metadata.name,ALLOCATABLE CPU:.status.allocatable.cpu,ALLOCATABLE MEMORY:.status.allocatable.memory"
-  NODE                    ALLOCATABLE CPU   ALLOCATABLE MEMORY
-  172.16.192.36           15600m            28262728Ki
-  172.16.193.199          15890m            30121540Ki
-  172.16.193.75           15600m            28262728Ki
-#+end_src
-
-**** 节点更新维护
-
-#+begin_src shell
-  # 1. 标记节点不可被调度
-  $ kubectl cordon 172.16.192.36
-
-  # 2.驱逐节点上的所有 pod（除daemonset），并删除临时盘
-  $ kubectl drain 172.16.192.36 --ignore-daemonsets --delete-emptydir-data
-
-  # 3. 重新标记节点为可调度
-  $ kubectl uncordon 172.16.192.36
-#+end_src
-
-*** Pod
-
-**** 设置Pod 调度策略
-
-硬亲和（ ~requiredDuringSchedulingIngoredExecution~ ）：
-#+begin_src yaml
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-            - key: foo
-              operator: In
-              values:
-              - bar
-#+end_src
-
-软亲和（ ~preferredDuringSchedulingIgnoredExecution~ ）
-#+begin_src yaml
-  nodeAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - preference:
-        matchExpressions:
-        - key: foo
-          operator: In
-          values:
-          - ""
-      weight: 100
-#+end_src
-
-** Makefile 速查表                                                 :cheatsheet:
-:properties:
-:export_file_name: makefile-cheatsheet
-:end:
-
-*** Missing separator
-
-~make~ 使用 ~tab~ 来进行缩进，用空格缩进则报错；如果是 ~tab~ ，会以 ~^I~ 符号呈现，可以通过以下方式进行检查：
-
-#+begin_src shell
-  $ cat Makefile
-  .PHONY: print
-  print:
-  echo "test"
-  echo "test"
-
-  $ make print 
-  Makefile:3: *** missing separator.  Stop.
-
-  $ cat -e -t -v Makefile
-  .PHONY: print$
-  print:$
-  echo "test"$
-  ^Iecho "test"$
-#+end_src
-
-*** 在 Makefile 中使用 $ 符号
-
-在 Makefile 中，需要区分 ~$~ 的使用，是为了引用变量例如 ~$variable~ ；还是需要使用 ~$~ 传递给 shell 命令；因此如果单纯想要使用 ~$~ ，就需要重复写两遍 ~$$~ 进行转义：
-
-#+begin_src makefile
-  # 无效用法：
-  .PHONY: replace
-    echo ' foo' | sed 's/foo$/bar/g'
-
-  # 正确用法：
-  .PHONY: replace
-    echo ' foo' | sed 's/foo$$/bar/g'
-#+end_src
-
------
-Refs:
-- [[https://www.gnu.org/software/make/manual/make.html#Rule-Introduction][make规则介绍]]
-- [[https://www.gnu.org/software/make/manual/make.html#Using-Variables][Using Variables]]
-- [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html][make macros]]
-
-** TODO Shell 速查表                                               :cheatsheet:
-:properties:
-:export_file_name: shell-cheatsheet
-:end:
-
-*** tar
-
-#+begin_src shell
-  # 解压压缩包文件到指定文件夹
-  mkdir ${dirname}
-  tar -zxvf archive.tar.gz -C ${dirname} --strip-components=1
-#+end_src
-
-*** tcpdump
-
-列出所有网卡接口：
-
-#+begin_src shell
-  tcpdump -D
-#+end_src
-
-抓取指定网卡 =eht1= ，按照每个文件大小10M输出抓包内容到文件 =dump.cap= 中：
-
-#+begin_src shell
-  $ tcpdump -nni eth1 -w dump.cap -C10M -Zroot
-#+end_src
-
 ** DONE 使用 net/http 启动一个 web server                           :@golang:
 :properties:
 :export_file_name: golang-net-http-server
@@ -682,7 +343,7 @@ func (mux *ServeMux) match(path string) (h Handler, pattern string) {
 }
 #+end_src
 
-** DONE Golang Context with value                                   :@golang:
+** DONE Golang Context with value                                 :@golang:
 :properties:
 :export_file_name: golang-context-with-value
 :export_date: 2020-08-20
@@ -786,3 +447,477 @@ Use context Values only for request-scoped data that transits processes and APIs
 
 
 
+** Setup My Blog with Hugo and Org Mode                           :@emacs:emacs:orgmode:
+:properties:
+:export_file_name: setup-my-blog-with-hugo-and-org-mode
+:end:
+
+*** 安装 Hugo
+
+#+begin_src shell
+  $ brew install hugo
+#+end_src
+
+*** 项目初始化
+
+#+begin_src shell
+  $ hugo new site blog
+  $ cd blog; git init .
+  # 安装主题
+  $ git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder
+#+end_src
+
+*** 修改配置文件 hugo.toml
+
+#+begin_src toml
+baseurl = "http://www.example.com"
+title = "example"
+theme = "hugo-coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+
+[markup.highlight]
+style = "github-dark"
+
+[params]
+  author = "example"
+  info = ""
+  description = ""
+  keywords = "blog,developer,personal"
+  avatarurl = "images/avatar.jpg"
+  #gravatar = "john.doe@example.com"
+
+  faviconSVG = "/img/favicon.svg"
+  favicon_32 = "/img/favicon-32x32.png"
+  favicon_16 = "/img/favicon-16x16.png"
+
+  since = 2020
+
+  enableTwemoji = true
+
+  colorScheme = "auto"
+  hidecolorschemetoggle = false
+
+  # customCSS = ["css/custom.css"]
+  # customSCSS = ["scss/custom.scss"]
+  # customJS = ["js/custom.js"]
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+  author = "authors"
+
+# Social links
+[[params.social]]
+  name = "Github"
+  icon = "fa fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/example/"
+
+# Menu links
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
+[[menu.main]]
+  name = "About"
+  weight = 2
+  url = "about/"
+#+end_src
+
+*** 创建第一篇 Hello World 文章
+
+#+begin_src shell
+  $ hugo new content posts/hello-world.md
+  $ cat content/posts/hello-world.md
+#+end_src
+
+显示如下内容：
+#+begin_src markdown
+  +++
+  title = 'Hello World'
+  date = 2023-10-14T01:31:21+08:00
+  draft = true
+  +++
+#+end_src
+
+在文本中追加内容 =hello world= ，启动 Hugo Server：
+
+#+begin_src shell
+  $ echo 'hello world' >> content/posts/hello-world.md
+  # 同时构建草稿文章
+  $ hugo server --buildDrafts
+  # ...
+  # Web Server is available at http://localhost:62743/ (bind address 127.0.0.1)
+  # ...
+#+end_src
+
+打开浏览器，访问 =http://localhost:62743/= ：
+
+file:static/images/hello-world.png
+
+*** 使用 org-mode 来编辑博客
+
+1. 使用 =ox-hugo= 插件来支持 org 文件生成 markdown 文件：
+   spacemacs 已经集成 =ox-hugo= 插件，直接启用即可：
+
+   #+begin_src emacs-lisp
+     dotspacemacs-configuration-layers
+     '(org :variables
+           org-enable-hugo-support t)
+     )
+   #+end_src
+   
+2. 在博客根目录下创建 org 文件，例如： =index.org=
+
+   #+begin_src org
+     ,#+title: Example's blog
+     ,#+author: nobody
+
+     ,#+hugo_auto_set_lastmod: t
+     ,#+hugo_base_dir: .
+     ,#+hugo_section: .
+
+     ,#+options: toc:2
+
+     ,* Posts
+     :properties:
+     :export_hugo_section: posts
+     :end:
+
+     ,** Hello world!
+     :properties:
+     :export_file_name: hello-world
+     :end:
+
+     Hello, this is my first article.
+   #+end_src
+
+   执行 =, e e= 或 =SPC SPC org-export-dispatch RET= 会看到如下窗口，再执行 =H H= 导出为 markdown 文件，并保存到 =content/posts= 目录下：
+
+   file:static/images/org-export-dispatch-window.png
+
+3. 保存后自动导出生成 markdown 文件
+
+   每次执行 =, e e H H= 生成操作还挺繁琐，如何进行配置每次一保存 org 文件自动生成导出呢？
+
+   在博客根目录下创建 =.dir-locals.el= 文件：
+
+   #+begin_src emacs-lisp
+     ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
+   #+end_src
+   
+** Emacs 之路                                                      :@emacs:emacs:
+:properties:
+:export_file_name: the-way-to-emacs
+:end:
+
+*** Setup with spacemacs
+
+#+begin_src shell
+  # 下载 emacs
+  $ brew install --cask emacs
+
+  # 启用 spacemacs 作为 emacs 的加载入口
+  $ git clone https://github.com/syl20bnr/spacemacs spacemacs.d
+  $ ln -s ~/dotfiles/spacemacs.d ~/.emacs.d
+
+  # 启动 emacs（GUI模式），下载依赖
+  $ emacs
+  # 终端模式下：
+  # $ emacs --nw
+
+  # 将 spacemacs 的启动配置存到到自定义的 dotfiles 下，方便统一管理
+  $ mkdir -p ~/dotfiles/.emacs.d
+  $ mv ~/.spacemacs* ~/dotfiles/.emacs.d
+  $ ln -s ~/dotfiles/.emacs.d/.spacemacs ~/.spacemacs
+  $ ln -s ~/dotfiles/.emacs.d/.spacemacs.env ~/.spacemacs.env
+#+end_src
+
+*** Org mode
+
+**** 语法
+
+-----
+Refs:
+
+- [[https://orgmode.org/worg/org-syntax.html][org-syntax]]
+**** 如何创建代码段
+
+执行 ~, i b~ 弹出菜单选择框，再按 s ~s[src]~
+
+#+BEGIN_SRC org
+  ,#+BEGIN_SRC org
+  ,#+END_SRC
+#+END_SRC
+
+**** 如何编辑代码段
+
+~C-c '~ 进入编辑代码段界面， ~, c~ 保存修改， ~, k~ 撤销修改。
+
+-----
+Refs:
+- [[https://orgmode.org/manual/Structure-of-Code-Blocks.html][Structure of Code Blocks]]
+- [[https://andreyor.st/posts/2022-10-16-my-blogging-setup-with-emacs-and-org-mode/][setup-with-emacs-and-org-mode]]
+
+**** TOC(Table of Contents)
+
+-----
+Refs:
+
+- [[https://orgmode.org/manual/Table-of-Contents.html][Table-of-Contents]]
+
+*** Markdown
+
+**** 生成 TOC
+
+执行 ~SPC SPC markdown-toc-generate-toc RET~
+
+**** 预览
+
+1. 安装 ~vmd~
+  #+begin_src shell
+    npm install -g vmd
+  #+end_src
+2. 配置实时预览引擎
+   #+begin_src emacs-lisp
+     dotspacemacs-configuration-layers '(
+       (markdown :variables markdown-live-preview-engine 'vmd))
+   #+end_src
+
+
+*** Plugins
+
+**** Treemacs
+
+Repo: [[https://github.com/Alexander-Miller/treemacs][Treemacs]]
+
+#+begin_quote
+a tree layout file explorer for Emacs
+#+end_quote
+
+***** 如何使用
+
+spacemacs 已经包含 treemacs layer，可以直接使用：
+
+#+begin_src emacs-lisp
+  dotspacemacs-configuration-layers
+  '(treemacs :variables
+             treemacs-use-git-mode 'deferred)
+#+end_src
+
+- 添加工程（Project）到工作空间（Workspace）中
+
+  光标焦点移动到 Treemacs 窗口中，执行 =C-c C-p a= 或者 =SPC SPC treemacs-add-project RET=
+  选择指定目录到工程中。
+
+- 对工作空间的工程进行排序
+
+  执行 =C-c C-w e= 或者 =SPC SPC treemacs-edit-workspaces RET= ，会弹出窗口对文件进行编辑：
+
+  #+begin_src org
+    ,#+TITLE: Edit Treemacs Workspaces & Projects
+    # Call ~treemacs-finish-edit~ or press ~C-c C-c~ when done.
+    # [[https://github.com/Alexander-Miller/treemacs#conveniently-editing-your-projects-and-workspaces][Click here for detailed documentation.]]
+    # To cancel you can simply kill this buffer.
+
+    ,* Default
+    ,** dotfiles
+     - path :: ~/dotfiles
+  #+end_src
+
+  确认编辑修改后， =C-c C-c= 进行保存并退出。
+
+** Kubectl 速查表                                                  :@kubernetes:cheatsheet:
+:properties:
+:export_file_name: kubectl-cheatsheet
+:end:
+
+*** Node
+**** 查看 Node 资源使用情况
+
+#+begin_src shell
+  $ kubectl top node
+  NAME                    CPU(cores)   CPU%        MEMORY(bytes)   MEMORY%
+  172.16.192.36           1961m        12%         16885Mi         61%
+  172.16.193.199          839m         5%          8046Mi          27%
+  172.16.193.75           1915m        12%         10597Mi         38%
+#+end_src
+
+**** 获取指定Node上的pod列表
+
+#+begin_src shell
+  $ kubectl get po -A -o wide --field-selector spec.nodeName=172.16.192.36
+  NAMESPACE     NAME                   READY    STATUS    RESTARTS   AGE     IP               NODE            NOMINATED NODE   READINESS GATES
+  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
+  kube-system   node-local-dns-tqpkz   1/1      Running   0          2d7h    172.16.192.36    172.16.192.36   <none>           <none>
+  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
+#+end_src
+
+**** 获取节点总可用资源
+
+#+begin_src shell
+  $ kubectl get node -o=custom-columns="NODE:.metadata.name,ALLOCATABLE CPU:.status.allocatable.cpu,ALLOCATABLE MEMORY:.status.allocatable.memory"
+  NODE                    ALLOCATABLE CPU   ALLOCATABLE MEMORY
+  172.16.192.36           15600m            28262728Ki
+  172.16.193.199          15890m            30121540Ki
+  172.16.193.75           15600m            28262728Ki
+#+end_src
+
+**** 节点更新维护
+
+#+begin_src shell
+  # 1. 标记节点不可被调度
+  $ kubectl cordon 172.16.192.36
+
+  # 2.驱逐节点上的所有 pod（除daemonset），并删除临时盘
+  $ kubectl drain 172.16.192.36 --ignore-daemonsets --delete-emptydir-data
+
+  # 3. 重新标记节点为可调度
+  $ kubectl uncordon 172.16.192.36
+#+end_src
+
+*** Pod
+
+**** 设置Pod 调度策略
+
+硬亲和（ ~requiredDuringSchedulingIngoredExecution~ ）：
+#+begin_src yaml
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+            - key: foo
+              operator: In
+              values:
+              - bar
+#+end_src
+
+软亲和（ ~preferredDuringSchedulingIgnoredExecution~ ）
+#+begin_src yaml
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - preference:
+        matchExpressions:
+        - key: foo
+          operator: In
+          values:
+          - ""
+      weight: 100
+#+end_src
+
+** Makefile 速查表                                                 :cheatsheet:
+:properties:
+:export_file_name: makefile-cheatsheet
+:end:
+
+*** Missing separator
+
+~make~ 使用 ~tab~ 来进行缩进，用空格缩进则报错；如果是 ~tab~ ，会以 ~^I~ 符号呈现，可以通过以下方式进行检查：
+
+#+begin_src shell
+  $ cat Makefile
+  .PHONY: print
+  print:
+  echo "test"
+  echo "test"
+
+  $ make print 
+  Makefile:3: *** missing separator.  Stop.
+
+  $ cat -e -t -v Makefile
+  .PHONY: print$
+  print:$
+  echo "test"$
+  ^Iecho "test"$
+#+end_src
+
+*** 在 Makefile 中使用 $ 符号
+
+在 Makefile 中，需要区分 ~$~ 的使用，是为了引用变量例如 ~$variable~ ；还是需要使用 ~$~ 传递给 shell 命令；因此如果单纯想要使用 ~$~ ，就需要重复写两遍 ~$$~ 进行转义：
+
+#+begin_src makefile
+  # 无效用法：
+  .PHONY: replace
+    echo ' foo' | sed 's/foo$/bar/g'
+
+  # 正确用法：
+  .PHONY: replace
+    echo ' foo' | sed 's/foo$$/bar/g'
+#+end_src
+
+-----
+Refs:
+- [[https://www.gnu.org/software/make/manual/make.html#Rule-Introduction][make规则介绍]]
+- [[https://www.gnu.org/software/make/manual/make.html#Using-Variables][Using Variables]]
+- [[https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html][make macros]]
+
+** Shell 速查表                                                    :cheatsheet:
+:properties:
+:export_file_name: shell-cheatsheet
+:end:
+
+*** tar
+
+#+begin_src shell
+  # 解压压缩包文件到指定文件夹
+  mkdir ${dirname}
+  tar -zxvf archive.tar.gz -C ${dirname} --strip-components=1
+#+end_src
+
+*** tcpdump
+
+列出所有网卡接口：
+
+#+begin_src shell
+  tcpdump -D
+#+end_src
+
+抓取指定网卡 =eht1= ，按照每个文件大小10M输出抓包内容到文件 =dump.cap= 中：
+
+#+begin_src shell
+  $ tcpdump -nni eth1 -w dump.cap -C10M -Zroot
+#+end_src
+
+** TODO Golang 实现一个协程池                                        :golang:
+:properties:
+:export_file_name: implements-a-goroutine-pool-in-go
+:end:
+
+*** 为什么要使用 goroutine 协程池
+
+1. 在并发编程时，可以限制 goroutine 的数量，复用资源，提升性能；
+2. 保持 CPU 缓存命中率，让 CPU 缓存处于活跃状态；
+
+*** 如何实现一个简易 goroutine 协程池
+
+1. 先对我们的目标进行抽象，池化的对象无非是启动、停止、提交任务：
+
+#+begin_src go
+  type WorkerPool struct {
+  }
+
+  func (wp *WorkerPool) Start() {
+
+  }
+
+  func (wp *WorkerPool) Stop() {
+
+  }
+
+  func (wp *WorkerPool) Submit(fn func()) error {
+    panic("implement me")
+  }
+#+end_src
+
+
+-----
+Refs:
+
+- [[https://github.com/valyala/fasthttp/blob/master/workerpool.go][fasthttp workerpool]]
+- [[https://github.com/rulego/rulego/blob/main/pool/workerpool.go][rulego workerpool]]
+- [[https://github.com/panjf2000/ants][ants: a high-performance and low-cost goroutine pool]]

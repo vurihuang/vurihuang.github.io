@@ -1,8 +1,9 @@
 +++
 title = "Setup My Blog with Hugo and Org Mode"
 author = ["vuri"]
-lastmod = 2023-10-14T02:08:01+08:00
+lastmod = 2023-10-15T20:21:01+08:00
 tags = ["emacs", "orgmode"]
+categories = ["emacs"]
 draft = false
 +++
 
@@ -14,6 +15,7 @@ draft = false
 - [项目初始化](#项目初始化)
 - [修改配置文件 hugo.toml](#修改配置文件-hugo-dot-toml)
 - [创建第一篇 Hello World 文章](#创建第一篇-hello-world-文章)
+- [使用 org-mode 来编辑博客](#使用-org-mode-来编辑博客)
 
 </div>
 <!--endtoc-->
@@ -129,3 +131,51 @@ $ hugo server --buildDrafts
 打开浏览器，访问 `http://localhost:62743/` ：
 
 {{< figure src="/images/hello-world.png" >}}
+
+
+## 使用 org-mode 来编辑博客 {#使用-org-mode-来编辑博客}
+
+1.  使用 `ox-hugo` 插件来支持 org 文件生成 markdown 文件：
+    spacemacs 已经集成 `ox-hugo` 插件，直接启用即可：
+    ```emacs-lisp
+    dotspacemacs-configuration-layers
+    '(org :variables
+          org-enable-hugo-support t)
+    )
+    ```
+
+2.  在博客根目录下创建 org 文件，例如： `index.org`
+    ```org
+    #+title: Example's blog
+    #+author: nobody
+
+    #+hugo_auto_set_lastmod: t
+    #+hugo_base_dir: .
+    #+hugo_section: .
+
+    #+options: toc:2
+
+    * Posts
+    :properties:
+    :export_hugo_section: posts
+    :end:
+
+    ** Hello world!
+    :properties:
+    :export_file_name: hello-world
+    :end:
+
+    Hello, this is my first article.
+    ```
+    执行 `, e e` 或 `SPC SPC org-export-dispatch RET` 会看到如下窗口，再执行 `H H` 导出为 markdown 文件，并保存到 `content/posts` 目录下：
+
+    {{< figure src="/images/org-export-dispatch-window.png" >}}
+
+3.  保存后自动导出生成 markdown 文件
+
+    每次执行 `, e e H H` 生成操作还挺繁琐，如何进行配置每次一保存 org 文件自动生成导出呢？
+
+    在博客根目录下创建 `.dir-locals.el` 文件：
+    ```emacs-lisp
+    ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
+    ```
