@@ -1,7 +1,7 @@
 +++
 title = "Setup My Blog with Hugo and Org Mode"
 author = ["vuri"]
-lastmod = 2023-10-15T20:21:01+08:00
+lastmod = 2023-10-17T00:29:50+08:00
 tags = ["emacs", "orgmode"]
 categories = ["emacs"]
 draft = false
