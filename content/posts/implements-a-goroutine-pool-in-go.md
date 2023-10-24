@@ -1,7 +1,7 @@
 +++
 title = "Golang 实现一个协程池 – rulego/fasthttp workerpool 源码介绍"
 author = ["vuri"]
-lastmod = 2023-10-17T22:26:34+08:00
+lastmod = 2023-10-17T22:31:49+08:00
 tags = ["golang"]
 draft = false
 +++
@@ -213,9 +213,9 @@ draft = false
 
         // 异步清理 worker
         go func() {
-          var scratchs []*workerChan
+          var scratch []*workerChan
           for {
-            wp.clean(scratchs)
+            wp.clean(&scratch)
             select {
             case <-stopCh:
               return
