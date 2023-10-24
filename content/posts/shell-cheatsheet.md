@@ -1,7 +1,7 @@
 +++
 title = "Shell 速查表"
 author = ["vuri"]
-lastmod = 2023-10-25T01:37:15+08:00
+lastmod = 2023-10-25T01:39:15+08:00
 tags = ["cheatsheet"]
 draft = false
 +++
