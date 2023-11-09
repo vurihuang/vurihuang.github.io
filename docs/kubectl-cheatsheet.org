@@ -1,0 +1,84 @@
+#+hugo_base_dir: ..
+#+hugo_section: posts
+#+hugo_auto_set_lastmod: t
+
+#+options: toc:2
+
+* Kubectl 速查表                                    :@kubernetes:cheatsheet:
+:properties:
+:export_file_name: kubectl-cheatsheet
+:end:
+
+*** Node
+**** 查看 Node 资源使用情况
+
+#+begin_src shell
+  $ kubectl top node
+  NAME                    CPU(cores)   CPU%        MEMORY(bytes)   MEMORY%
+  172.16.192.36           1961m        12%         16885Mi         61%
+  172.16.193.199          839m         5%          8046Mi          27%
+  172.16.193.75           1915m        12%         10597Mi         38%
+#+end_src
+
+**** 获取指定Node上的pod列表
+
+#+begin_src shell
+  $ kubectl get po -A -o wide --field-selector spec.nodeName=172.16.192.36
+  NAMESPACE     NAME                   READY    STATUS    RESTARTS   AGE     IP               NODE            NOMINATED NODE   READINESS GATES
+  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
+  kube-system   node-local-dns-tqpkz   1/1      Running   0          2d7h    172.16.192.36    172.16.192.36   <none>           <none>
+  kube-system   kube-proxy-6gbzq       1/1      Running   0          13d     172.16.192.36    172.16.192.36   <none>           <none>
+#+end_src
+
+**** 获取节点总可用资源
+
+#+begin_src shell
+  $ kubectl get node -o=custom-columns="NODE:.metadata.name,ALLOCATABLE CPU:.status.allocatable.cpu,ALLOCATABLE MEMORY:.status.allocatable.memory"
+  NODE                    ALLOCATABLE CPU   ALLOCATABLE MEMORY
+  172.16.192.36           15600m            28262728Ki
+  172.16.193.199          15890m            30121540Ki
+  172.16.193.75           15600m            28262728Ki
+#+end_src
+
+**** 节点更新维护
+
+#+begin_src shell
+  # 1. 标记节点不可被调度
+  $ kubectl cordon 172.16.192.36
+
+  # 2.驱逐节点上的所有 pod（除daemonset），并删除临时盘
+  $ kubectl drain 172.16.192.36 --ignore-daemonsets --delete-emptydir-data
+
+  # 3. 重新标记节点为可调度
+  $ kubectl uncordon 172.16.192.36
+#+end_src
+
+*** Pod
+
+**** 设置Pod 调度策略
+
+硬亲和（ ~requiredDuringSchedulingIngoredExecution~ ）：
+#+begin_src yaml
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+            - key: foo
+              operator: In
+              values:
+              - bar
+#+end_src
+
+软亲和（ ~preferredDuringSchedulingIgnoredExecution~ ）
+#+begin_src yaml
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - preference:
+        matchExpressions:
+        - key: foo
+          operator: In
+          values:
+          - ""
+      weight: 100
+#+end_src

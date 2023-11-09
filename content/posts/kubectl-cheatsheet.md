@@ -1,7 +1,7 @@
 +++
 title = "Kubectl 速查表"
 author = ["vuri"]
-lastmod = 2023-11-02T00:36:23+08:00
+lastmod = 2023-11-10T01:19:11+08:00
 tags = ["cheatsheet"]
 categories = ["kubernetes"]
 draft = false

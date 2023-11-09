@@ -1,8 +1,8 @@
 +++
 title = "Makefile 速查表"
 author = ["vuri"]
-lastmod = 2023-10-14T01:16:54+08:00
-categories = ["cheatsheet"]
+lastmod = 2023-11-10T01:20:31+08:00
+tags = ["cheatsheet"]
 draft = false
 +++
 
@@ -59,4 +59,4 @@ Refs:
 
 -   [make规则介绍](https://www.gnu.org/software/make/manual/make.html#Rule-Introduction)
 -   [Using Variables](https://www.gnu.org/software/make/manual/make.html#Using-Variables)
--   [make macros](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html)
+-   [[<https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html>][make macro
