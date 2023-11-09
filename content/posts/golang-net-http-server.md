@@ -2,7 +2,7 @@
 title = "使用 net/http 启动一个 web server"
 author = ["vuri"]
 date = 2020-08-29
-lastmod = 2023-10-14T02:13:28+08:00
+lastmod = 2023-11-09T01:41:11+08:00
 categories = ["golang"]
 draft = false
 +++
@@ -155,8 +155,7 @@ func (sl *sysListener) listenTCP(ctx context.Context, laddr *TCPAddr) (*TCPListe
 }
 ```
 
-既然我们知道了上面的 `Listener` 指的就是 `TCPListener` ，那么上面 `l.Accept()` 函数得到的 `rw` 值又是什么东西呢，
-这就还得看下 `TCPListener.Accept` 函数里头返回的具体是什么：
+既然我们知道了上面的 `Listener` 指的就是 `TCPListener` ，那么上面 `l.Accept()` 函数得到的 `rw` 值又是什么东西呢，这就还得看下 `TCPListener.Accept` 函数里头返回的具体是什么：
 
 ```go
 // Accept 被调用后返回一个连接.

@@ -1,7 +1,7 @@
 +++
 title = "Emacs 之路"
 author = ["vuri"]
-lastmod = 2023-10-15T20:24:44+08:00
+lastmod = 2023-11-09T01:38:54+08:00
 tags = ["emacs"]
 categories = ["emacs"]
 draft = false
@@ -32,6 +32,10 @@ draft = false
 ```shell
 # 下载 emacs
 $ brew install --cask emacs
+
+# 推荐这个分支的 emacs 发行版，提供更好的原生 GUI 支持，下载对应所需的 release 版本
+# 解决 GUI 下的闪屏问题，更加丝滑
+# https://github.com/railwaycat/homebrew-emacsmacport
 
 # 启用 spacemacs 作为 emacs 的加载入口
 $ git clone https://github.com/syl20bnr/spacemacs spacemacs.d

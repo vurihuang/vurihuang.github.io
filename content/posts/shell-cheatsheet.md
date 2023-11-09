@@ -1,7 +1,7 @@
 +++
 title = "Shell 速查表"
 author = ["vuri"]
-lastmod = 2023-10-25T01:39:15+08:00
+lastmod = 2023-11-10T01:11:29+08:00
 tags = ["cheatsheet"]
 draft = false
 +++
@@ -10,16 +10,35 @@ draft = false
 
 <div class="heading">Table of Contents</div>
 
+- [curl](#curl)
 - [dig](#dig)
 - [dnsperf](#dnsperf)
 - [journalctl](#journalctl)
 - [netstat](#netstat)
 - [nslookup](#nslookup)
+- [ps](#ps)
 - [tar](#tar)
 - [tcpdump](#tcpdump)
+- [wrk](#wrk)
 
 </div>
 <!--endtoc-->
+
+
+## curl {#curl}
+
+Intro: 发送请求
+
+Examples:
+
+```shell
+# 并发执行 curl 命令，最多10个线程
+# 1.
+$ seq 1 10 | xargs -n1 -P10 curl "https://www.google.com"
+
+# 隐藏 curl 输出
+$ curl -s "https://www.google.com" > /dev/null
+```
 
 
 ## dig {#dig}
@@ -27,7 +46,7 @@ draft = false
 
 ## dnsperf {#dnsperf}
 
-Usage: DNS 性能压测工具
+Intro: DNS 性能压测工具
 
 Install:
 
@@ -66,7 +85,9 @@ $ dnsperf -l 10 -s 127.0.0.1 -Q 100 -d records.txt
 
 ## journalctl {#journalctl}
 
-Usage: 查看 CentOS 系统 systemd 日志
+Intro: 查看 CentOS 系统 systemd 日志
+
+Examples:
 
 ```shell
 # 获取系统启动记录
@@ -92,7 +113,7 @@ $ journalctl --since="2023-10-21 17:23:29" --util="2023-10-21 18:00:00"
 
 ## netstat {#netstat}
 
-Usage:
+Intro： 查看网络状态
 
 Install:
 
@@ -101,10 +122,16 @@ Install:
 $ apt-get install -y net-tools
 ```
 
+Examples:
+
+```shell
+$ netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c
+```
+
 
 ## nslookup {#nslookup}
 
-Usage: 域名解析查询
+Intro： 域名解析查询
 
 Install:
 
@@ -120,6 +147,18 @@ $ nslookup www.baidu.com
 
 # 指定查询 A 记录
 $ nslookup -type=a www.baidu.com
+```
+
+
+## ps {#ps}
+
+Intro： 查看进程状态
+
+Install:
+
+```shell
+# ubuntu
+$ apt-get install -y procps
 ```
 
 
@@ -150,8 +189,11 @@ Examples:
 # 列出所有网卡接口：
 tcpdump -D
 
-# 抓取指定网卡 =eht1= ，按照每个文件大小10M输出抓包内容到文件 =dump.cap= 中：
+# 抓取指定网卡 eth1 ，按照每个文件大小10M输出抓包内容到文件 dump.cap 中：
 $ tcpdump -nni eth1 -w dump.cap -C10M -Zroot
 
 $ tcpdump -nnn -i any src host 127.0.0.1 and port 53 -tttt -Zroot
 ```
+
+
+## wrk {#wrk}
