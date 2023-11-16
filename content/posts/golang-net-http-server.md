@@ -1,8 +1,8 @@
 +++
-title = "使用 net/http 启动一个 web server"
+title = "Done 使用 net/http 启动一个 web server"
 author = ["vuri"]
 date = 2020-08-29
-lastmod = 2023-11-09T01:41:11+08:00
+lastmod = 2023-11-15T11:18:20+08:00
 categories = ["golang"]
 draft = false
 +++
@@ -24,20 +24,20 @@ draft = false
 package main
 
 import (
-  "fmt"
-  "net/http"
+	"fmt"
+	"net/http"
 )
 
 func main() {
-  http.HandleFunc("/hello", hello)
+	http.HandleFunc("/hello", hello)
 
-  if err := http.ListenAndServe(":8012", nil); err != nil {
-    panic(err)
-  }
+	if err := http.ListenAndServe(":8012", nil); err != nil {
+		panic(err)
+	}
 }
 
 func hello(w http.ResponseWriter, req *http.Request) {
-  _, _ = fmt.Fprintf(w, "hello\n")
+	_, _ = fmt.Fprintf(w, "hello\n")
 }
 ```
 
@@ -226,15 +226,15 @@ var defaultServeMux = ServeMux
 
 ```go
 type ServeMux struct {
-  mu    sync.RWMutex
-  m     map[string]muxEntry
-  es    []muxEntry // 根据路由长度排序的数组，路由长度从最长到最短。
-  hosts bool       // 是否存在路由包含主机名，有的话在匹配是必须 host+path 都满足 pattern 才行。
+	mu    sync.RWMutex
+	m     map[string]muxEntry
+	es    []muxEntry // 根据路由长度排序的数组，路由长度从最长到最短。
+	hosts bool       // 是否存在路由包含主机名，有的话在匹配是必须 host+path 都满足 pattern 才行。
 }
 
 type muxEntry struct {
-  h       Handler
-  pattern string
+	h       Handler
+	pattern string
 }
 ```
 

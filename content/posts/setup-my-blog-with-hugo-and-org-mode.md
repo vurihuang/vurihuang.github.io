@@ -1,7 +1,7 @@
 +++
 title = "Setup My Blog with Hugo and Org Mode"
 author = ["vuri"]
-lastmod = 2023-11-02T00:36:02+08:00
+lastmod = 2023-11-15T11:13:27+08:00
 tags = ["emacs", "orgmode"]
 categories = ["emacs"]
 draft = false
@@ -24,17 +24,17 @@ draft = false
 ## 安装 Hugo {#安装-hugo}
 
 ```shell
-$ brew install hugo
+  $ brew install hugo
 ```
 
 
 ## 项目初始化 {#项目初始化}
 
 ```shell
-$ hugo new site blog
-$ cd blog; git init .
-# 安装主题
-$ git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder
+  $ hugo new site blog
+  $ cd blog; git init .
+  # 安装主题
+  $ git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder
 ```
 
 
@@ -103,29 +103,29 @@ style = "github-dark"
 ## 创建第一篇 Hello World 文章 {#创建第一篇-hello-world-文章}
 
 ```shell
-$ hugo new content posts/hello-world.md
-$ cat content/posts/hello-world.md
+  $ hugo new content posts/hello-world.md
+  $ cat content/posts/hello-world.md
 ```
 
 显示如下内容：
 
 ```markdown
-+++
-title = 'Hello World'
-date = 2023-10-14T01:31:21+08:00
-draft = true
-+++
+  +++
+  title = 'Hello World'
+  date = 2023-10-14T01:31:21+08:00
+  draft = true
+  +++
 ```
 
 在文本中追加内容 `hello world` ，启动 Hugo Server：
 
 ```shell
-$ echo 'hello world' >> content/posts/hello-world.md
-# 同时构建草稿文章
-$ hugo server --buildDrafts
-# ...
-# Web Server is available at http://localhost:62743/ (bind address 127.0.0.1)
-# ...
+  $ echo 'hello world' >> content/posts/hello-world.md
+  # 同时构建草稿文章
+  $ hugo server --buildDrafts
+  # ...
+  # Web Server is available at http://localhost:62743/ (bind address 127.0.0.1)
+  # ...
 ```
 
 打开浏览器，访问 `http://localhost:62743/` ：
@@ -138,34 +138,34 @@ $ hugo server --buildDrafts
 1.  使用 `ox-hugo` 插件来支持 org 文件生成 markdown 文件：
     spacemacs 已经集成 `ox-hugo` 插件，直接启用即可：
     ```emacs-lisp
-    dotspacemacs-configuration-layers
-    '(org :variables
-          org-enable-hugo-support t)
-    )
+            dotspacemacs-configuration-layers
+            '(org :variables
+                  org-enable-hugo-support t)
+            )
     ```
 
 2.  在博客根目录下创建 org 文件，例如： `index.org`
     ```org
-    #+title: Example's blog
-    #+author: nobody
+            #+title: Example's blog
+            #+author: nobody
 
-    #+hugo_auto_set_lastmod: t
-    #+hugo_base_dir: .
-    #+hugo_section: .
+            #+hugo_auto_set_lastmod: t
+            #+hugo_base_dir: .
+            #+hugo_section: .
 
-    #+options: toc:2
+            #+options: toc:2
 
-    * Posts
-    :properties:
-    :export_hugo_section: posts
-    :end:
+            * Posts
+            :properties:
+            :export_hugo_section: posts
+            :end:
 
-    ** Hello world!
-    :properties:
-    :export_file_name: hello-world
-    :end:
+            ** Hello world!
+            :properties:
+            :export_file_name: hello-world
+            :end:
 
-    Hello, this is my first article.
+            Hello, this is my first article.
     ```
     执行 `, e e` 或 `SPC SPC org-export-dispatch RET` 会看到如下窗口，再执行 `H H` 导出为 markdown 文件，并保存到 `content/posts` 目录下：
 
@@ -177,5 +177,5 @@ $ hugo server --buildDrafts
 
     在博客根目录下创建 `.dir-locals.el` 文件：
     ```emacs-lisp
-    ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
+            ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
     ```

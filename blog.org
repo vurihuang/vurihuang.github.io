@@ -1,10 +1,6 @@
-#+title: Vuri's blog
-#+author: vuri
-
 #+hugo_auto_set_lastmod: t
 #+hugo_base_dir: .
 #+hugo_section: .
-
 #+options: toc:2
 
 * Posts
@@ -12,7 +8,7 @@
 :export_hugo_section: posts
 :end:
 
-** DONE 使用 net/http 启动一个 web server                          :@golang:
+** Done 使用 net/http 启动一个 web server                          :@golang:
 :properties:
 :export_file_name: golang-net-http-server
 :export_date: 2020-08-29
@@ -83,7 +79,7 @@ func (srv *Server) Serve(l net.Listener) error {
     ctx := context.WithValue(baseCtx, ServerContextKey, srv)
     for {
         rw, err := l.Accept()
-        
+
         // ...
 
         c := srv.newConn(rw)
@@ -710,7 +706,7 @@ Use context Values only for request-scoped data that transits processes and APIs
    #+end_src
 
    异步清理任务队列的 =clean()= 代码逻辑:
-   
+
    #+begin_src go
      func (wp *WorkerPool) clean(scratch *[]*workerChan) {
        maxIdleWorkerDuration := wp.getMaxIdleWorkerDuration()
@@ -759,14 +755,20 @@ Use context Values only for request-scoped data that transits processes and APIs
 
 把整个代码串起来,就是在 [[https://github.com/valyala/fasthttp/blob/master/workerpool.go][fasthttp]] 库中的 workerpool 协程池的逻辑,用来高效处理 http connection 连接;
 在 [[https://github.com/rulego/rulego/blob/main/pool/workerpool.go][rolego]] 库中,它进行简单的调整以适配各种 =fn= 函数的任务处理.
-   
+
 -----
 Refs:
 
 - [[https://github.com/valyala/fasthttp/blob/master/workerpool.go][fasthttp workerpool]]
 - [[https://github.com/rulego/rulego/blob/main/pool/workerpool.go][rulego workerpool]]
 - [[https://github.com/panjf2000/ants][ants: a high-performance and low-cost goroutine pool]]
-  
+
+:properties:
+:export_file_name: draft-list
+:end:
+
+*** Translating
+- [[https://blog.logrocket.com/when-to-use-rust-when-to-use-golang][when-to-use-rust-when-to-use-golang]]
 ** Setup My Blog with Hugo and Org Mode                :@emacs:emacs:orgmode:
 :properties:
 :export_file_name: setup-my-blog-with-hugo-and-org-mode
@@ -890,7 +892,7 @@ file:static/images/hello-world.png
            org-enable-hugo-support t)
      )
    #+end_src
-   
+
 2. 在博客根目录下创建 org 文件，例如： =index.org=
 
    #+begin_src org
@@ -935,7 +937,7 @@ file:static/images/hello-world.png
 :export_file_name: the-way-to-emacs
 :end:
 
-*** Setup with spacemacs
+*** [Deprecated] Setup with spacemacs
 
 #+begin_src shell
   # 下载 emacs
@@ -961,31 +963,137 @@ file:static/images/hello-world.png
   $ ln -s ~/dotfiles/.emacs.d/.spacemacs.env ~/.spacemacs.env
 #+end_src
 
+*** Setup with Doomemacs
+
+[[https://github.com/doomemacs/doomemacs][Doomemacs]]: About An Emacs framework for the stubborn martian hacker
+
+#+begin_quote
+为什么要使用 Doom?
+#+end_quote
+
+1. 它真的很快: 得益于它的结构设计和懒加载,比其他框架快很多;
+2. 比较接近原生: 接近原生的好处是上手更好理解和体验,不需要你过多了解框架的内容(+spacemacs+);
+
+**** 配置使用 chemacs2(可选但是推荐)
+
+[[https://github.com/plexus/chemacs2][Chemacs2]]: Emacs version switcher, improved
+
+#+begin_quote
+在安装使用之前,为什么要用 chemacs2?
+#+end_quote
+
+=chemacs2= 可以很方便地在多个 Emacs profile 配置进行切换;
+假定我们有一套不使用任何框架的原始配置(default profile); 一套 spacemacs 配置(spacemacs profile); 一套 doomemacs 配置(doomemacs profile):
+
+#+begin_src shell
+# 1. 备份当前正在使用的配置,以 default profile 为例:
+$ mv ~/.emacs.d ~/.emacs.default
+
+# 2. 你可能原来使用了 spacemacs 配置,可以统一下风格,这里不是强制的
+$ mv ~/.spacemacs.d ~/.emacs.spacemacs
+
+# 3. 安装 chemacs2
+$ git clone https://github.com/plexus/chemacs2.git ~/.emacs.d
+#+end_src
+
+编辑 =~/.emacs-profiles.el= 进行配置:
+
+#+begin_src emacs-lisp
+(("default" . ((user-emacs-directory . "~/.emacs.default"))) ;; GUI 默认使用 default 配置
+ ("spacemacs" . ((user-emacs-directory . "~/.emacs.spacemacs"))))
+#+end_src
+
+如果想支持多版本的 =spacemacs=,也可以这么配置:
+
+#+begin_src emacs-lisp
+;; 默认场景
+(("spacemacs" . ((user-emacs-directory . "~/spacemacs")
+                (env . (("SPACEMACSDIR" . "~/.spacemacs.d")))))
+
+;; 使用开发版本,原配置
+("spacemacs-develop" . ((user-emacs-directory . "~/spacemacs.develop")
+                    (env . (("SPACEMACSDIR" . "~/.spacemacs.d")))))
+
+;; 使用开发版本,开发配置
+("spacemacs-dev" . ((user-emacs-directory . "~/spacemacs.develop")
+                (env . (("SPACEMACSDIR" . "~/.spacemacs.d.dev"))))))
+#+end_src
+
+如何使用:
+
+#+begin_src shell
+# 使用默认配置 default
+$ emacs
+
+# 指定配置,等效于上面
+$ emacs --with-profile default
+
+# 指定另外一套配置
+$ emacs --with-profile spacemacs
+#+end_src
+
+**** 安装 doomemacs
+
+#+begin_src shell
+#+end_src
+
 *** Org mode
 
-**** 语法
 
 -----
 Refs:
 
 - [[https://orgmode.org/worg/org-syntax.html][org-syntax]]
+
 **** 如何创建代码段
 
-执行 ~, i b~ 弹出菜单选择框，再按 s ~s[src]~
+输入 =src= + =TAB= 生成如下格式的代码段:
 
-#+BEGIN_SRC org
-  ,#+BEGIN_SRC org
-  ,#+END_SRC
-#+END_SRC
+#+begin_src org
+,#+begin_src
+
+,#+end_src
+#+end_src
+
+或者输入 =quote= + =TAB= 生成如下格式的引用:
+
+#+begin_example
+,#+begin_quote
+
+,#+end_quote
+#+end_example
 
 **** 如何编辑代码段
 
-~C-c '~ 进入编辑代码段界面， ~, c~ 保存修改， ~, k~ 撤销修改。
+=C-c '= 进入编辑代码段界面， =C-c C-c= 保存修改， =C-c C-k= 撤销修改。
 
 -----
 Refs:
 - [[https://orgmode.org/manual/Structure-of-Code-Blocks.html][Structure of Code Blocks]]
 - [[https://andreyor.st/posts/2022-10-16-my-blogging-setup-with-emacs-and-org-mode/][setup-with-emacs-and-org-mode]]
+
+**** 如何创建表格
+
+Org 可以很方便通过 ASCII 来创建表格. 通过 =|= 符号作为列的分割符; 键入 =|= + =TAB= 作为表格的列;键入 =|-= 作为表格的行分割符号;表格大概长这个样子:
+
+#+begin_src org
+| Name  | Phone | Age |
+|-------+-------+-----|
+| Peter |  1234 |  17 |
+| Anna  |  4321 |  25 |
+#+end_src
+
+当你输入 =|Name|Phone|Age= 后,执行 =C-c RET=,可以直接快速生成这个样子的表格:
+
+#+begin_src org
+| Name | Phone | Age |
+|------+-------+-----|
+|      |       |     |
+#+end_src
+
+-----
+Refs:
+- [[https://orgmode.org/manual/Built_002din-Table-Editor.html][Built-in Table Editor]]
 
 **** TOC(Table of Contents)
 
@@ -1012,6 +1120,12 @@ Refs:
        (markdown :variables markdown-live-preview-engine 'vmd))
    #+end_src
 
+*** 快捷方式
+
+| Command                 | Key shortcut(native/Doom) | Description     |
+|-------------------------+---------------------------+-----------------|
+| org-insert-link         | C-c C-l / SPC m l l       | 插入超链接      |
+| org-toggle-link-display | SPC m l t                 | 展示/隐藏超链接 |
 
 *** Plugins
 
@@ -1028,9 +1142,9 @@ a tree layout file explorer for Emacs
 spacemacs 已经包含 treemacs layer，可以直接使用：
 
 #+begin_src emacs-lisp
-  dotspacemacs-configuration-layers
-  '(treemacs :variables
-             treemacs-use-git-mode 'deferred)
+dotspacemacs-configuration-layers
+'(treemacs :variables
+  treemacs-use-git-mode 'deferred)
 #+end_src
 
 - 添加工程（Project）到工作空间（Workspace）中
@@ -1042,32 +1156,56 @@ spacemacs 已经包含 treemacs layer，可以直接使用：
 
   执行 =C-c C-w e= 或者 =SPC SPC treemacs-edit-workspaces RET= ，会弹出窗口对文件进行编辑：
 
-  #+begin_src org
-    ,#+TITLE: Edit Treemacs Workspaces & Projects
-    # Call ~treemacs-finish-edit~ or press ~C-c C-c~ when done.
-    # [[https://github.com/Alexander-Miller/treemacs#conveniently-editing-your-projects-and-workspaces][Click here for detailed documentation.]]
-    # To cancel you can simply kill this buffer.
+#+begin_src org
+#+TITLE: Edit Treemacs Workspaces & Projects
+# Call =treemacs-finish-edit= or press =C-c C-c= when done.
+# [[https://github.com/Alexander-Miller/treemacs#conveniently-editing-your-projects-and-workspaces][Click here for detailed documentation.]]
+# To cancel you can simply kill this buffer.
 
-    ,* Default
-    ,** dotfiles
-     - path :: ~/dotfiles
-  #+end_src
+,* Default
+,** dotfiles
+    - path :: ~/dotfiles
+#+end_src
 
   确认编辑修改后， =C-c C-c= 进行保存并退出。
 
-** 【译】Emacs 入门指南
+** TODO 【译】Emacs 入门指南
 :properties:
 :export_file_name: beginners-guide-to-emacs
 :end:
 
 原文: [[https://www.masteringemacs.org/article/beginners-guide-to-emacs][An Emacs Tutorial: Beginner’s Guide to Emacs]]
 
+** TODO 【译】什么时候使用 Rust 什么时候使用 Golang             :Rust:Trans:
+:properties:
+:export_file_name: when-to-use-rust-when-to-use-golang
+:end:
+
+原文：[[https://blog.logrocket.com/when-to-use-rust-when-to-use-golang/][When to use rust and when to use golang]]
+
+毫无疑问， Go 和 Rust 之间的区别还是很明显的。Go 更加专注在构建 web APIs 应用程序和无状态的微服务上，特别是在协程（Goroutines）的加持之下。
+而 Rust 当然也可以实现，但是对开发者角度从他们的经验来看会难的多。
+
+Rust 在处理大量数据和 CPU 密集型的操作上
+
+*** Performance(性能)
+*** Rust vs Go benchmarks(Rust vs Go 压测对比)
+*** Scalability(可扩展性)
+*** Concurrency(并发)
+*** Memory safety(内存安全)
+*** Developer experience(开发体验)
+*** Dev cycles(开发生命周期)
+*** Features(特点)
+*** 什么时候使用 Go
+*** 什么时候使用 Rust
+*** 我对 Rust vs Go 的真实看法
+
 ** TODO 使用 GDB 调试 Go 代码
 :properties:
 :export_file_name: gdb-with-golang
 :end:
 
-** TODO The hardway to Rust
+** TODO The hardway to Rust                                           :Rust:
 :properties:
 :export_file_name: the-hardway-to-rust
 :end:
@@ -1078,24 +1216,24 @@ spacemacs 已经包含 treemacs layer，可以直接使用：
 =rustup= 是 Rust 的安装程序，通过下面这个方式进行安装:
 
 #+begin_src shell
-  $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
-  $ rustup -V
-  rustup 1.26.0 (5af9b9484 2023-04-05)
-  info: This is the version for the rustup toolchain manager, not the rustc compiler.
-  info: The currently active `rustc` version is `rustc 1.73.0 (cc66ad468 2023-10-03)`
+$ rustup -V
+rustup 1.26.0 (5af9b9484 2023-04-05)
+info: This is the version for the rustup toolchain manager, not the rustc compiler.
+info: The currently active `rustc` version is `rustc 1.73.0 (cc66ad468 2023-10-03)`
 
-  $ rustc -V
-  rustc 1.73.0 (cc66ad468 2023-10-03)
+$ rustc -V
+rustc 1.73.0 (cc66ad468 2023-10-03)
 
-  $ cargo -V
-  cargo 1.73.0 (9c4383fb5 2023-08-26)
+$ cargo -V
+cargo 1.73.0 (9c4383fb5 2023-08-26)
 #+end_src
 
 如何进行版本更新:
 
 #+begin_src shell
-  $ rustup update
+$ rustup update
 #+end_src
 
 执行 =rustup doc= 打开本地文档
@@ -1105,11 +1243,11 @@ spacemacs 已经包含 treemacs layer，可以直接使用：
 在 Emacs/Spacemacs 上进行环境配置，启用 =Rust layer= ：
 
 #+begin_src emacs-lisp
-  (dotspacemacs-configuration-layers
-   '(
-     (rust :variables
-           rustic-format-on-save t))
-  )
+(dotspacemacs-configuration-layers
+ '(
+   (rust :variables
+         rustic-format-on-save t))
+ )
 #+end_src
 
 **** 配置 rust-analyzer
@@ -1117,7 +1255,80 @@ spacemacs 已经包含 treemacs layer，可以直接使用：
 =rust-analyzer= 是 =Rust= 的 =LSP(Language Server Protocol)= 的实现，提供自动补全、跳转等功能。
 
 #+begin_src shell
-  $ brew install rust-analyzer
+$ brew install rust-analyzer
+#+end_src
+
+**** 配置使用镜像源
+
+创建 =~/.cargo/config= 文件，以 =rsproxy= 作为示例：
+
+#+begin_src toml
+  [source.crates-io]
+  replace-with = 'rsproxy'
+
+  [source.rsproxy]
+  registry = "https://rsproxy.cn/crates.io-index"
+
+  [source.rsproxy-sparse]
+  registry = "sparse+https://rsproxy.cn/index/"
+
+  [registries.rsproxy]
+  index = "https://rsproxy.cn/crates.io-index"
+
+  [net]
+  git-fetch-with-cli = true
+#+end_src
+
+使用 [[https://github.com/wtklbm/crm][crm (Cargo registry manager)]] 进行镜像源管理：
+
+#+begin_src shell
+  # 安装
+  $ cargo install crm
+
+  $ crm
+  命令无效。参考:
+
+  crm best                    评估网络延迟并自动切换到最优的镜像
+  crm best git                仅评估 git 镜像源
+  crm best sparse             仅评估支持 sparse 协议的镜像源
+  crm best git-download       仅评估能够快速下载软件包的 git 镜像源 (推荐使用)
+  crm best sparse-download    仅评估能够快速下载软件包且支持 sparse 协议的镜像源 (推荐使用)
+  crm current                 获取当前所使用的镜像
+  crm default                 恢复为官方默认镜像
+  crm install [args]          使用官方镜像执行 "cargo install"
+  crm list                    从镜像配置文件中获取镜像列表
+  crm publish [args]          使用官方镜像执行 "cargo publish"
+  crm remove <name>           在镜像配置文件中删除镜像
+  crm save <name> <addr> <dl> 在镜像配置文件中添加/更新镜像
+  crm test [name]             下载测试包以评估网络延迟
+  crm update [args]           使用官方镜像执行 "cargo update"
+  crm use <name>              切换为要使用的镜像
+  crm version                 查看当前版本
+  crm check-update            检测版本更新
+
+  # 获取镜像列表
+  $ crm list
+  bfsu           - https://mirrors.bfsu.edu.cn/git/crates.io-index.git
+  bfsu-sparse    - sparse+https://mirrors.bfsu.edu.cn/crates.io-index/
+  hit            - https://mirrors.hit.edu.cn/crates.io-index.git
+  nju            - https://mirror.nju.edu.cn/git/crates.io-index.git
+  rsproxy        - https://rsproxy.cn/crates.io-index
+  rsproxy-sparse - sparse+https://rsproxy.cn/index/
+  ,* rust-lang    - https://github.com/rust-lang/crates.io-index
+  sjtu           - https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index
+  sjtu-sparse    - sparse+https://mirrors.sjtug.sjtu.edu.cn/crates.io-index/
+  tuna           - https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git
+  tuna-sparse    - sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/
+  ustc           - git://mirrors.ustc.edu.cn/crates.io-index
+  ustc-sparse    - sparse+https://mirrors.ustc.edu.cn/crates.io-index/
+
+  # 自动选择最优镜像源
+  $ crm best
+  已切换到 sjtu 镜像源
+
+  # 查看当前使用的镜像源
+  $ crm current
+  sjtu: https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index
 #+end_src
 
 *** 01-Hello world

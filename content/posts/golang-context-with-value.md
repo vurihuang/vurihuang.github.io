@@ -2,7 +2,7 @@
 title = "Golang Context with value"
 author = ["vuri"]
 date = 2020-08-20
-lastmod = 2023-10-14T02:14:27+08:00
+lastmod = 2023-11-14T19:31:28+08:00
 categories = ["golang"]
 draft = false
 +++
@@ -10,41 +10,41 @@ draft = false
 今天遇到个很有意思的一段代码，这段程序会打印出什么结果：
 
 ```go
-package main
+  package main
 
-import (
-  "context"
-  "fmt"
-)
+  import (
+    "context"
+    "fmt"
+  )
 
-func f(ctx context.Context) {
-  context.WithValue(ctx, "foo", -6)
-}
+  func f(ctx context.Context) {
+    context.WithValue(ctx, "foo", -6)
+  }
 
-func main() {
-  ctx := context.TODO()
-  f(ctx)
-  fmt.Println(ctx.Value("foo"))
-  // -6
-  // 0
-  // <nil>
-  // panic
-}
+  func main() {
+    ctx := context.TODO()
+    f(ctx)
+    fmt.Println(ctx.Value("foo"))
+    // -6
+    // 0
+    // <nil>
+    // panic
+  }
 ```
 
 先让我们看看 `context.TODO()` 返回的结果是什么：
 
 ```go
-var (
-  background = new(emptyCtx)
-  todo       = new(emptyCtx)
-)
+  var (
+    background = new(emptyCtx)
+    todo       = new(emptyCtx)
+  )
 
-type emptyCtx int
+  type emptyCtx int
 
-func TODO() Context {
-  return todo
-}
+  func TODO() Context {
+    return todo
+  }
 ```
 
 `context.TODO()` 返回的实例返回的正是一个 `emptyCtx` 对象，也就是 `int` ，它不能被 cancel，也不包含任何值，并且也没有 deadline。同时也不是一个空的结构体 `struct{}` ，因为它需要一个目标地址。
@@ -77,10 +77,10 @@ func valueCtx struct {
 
 ```go
 func (c *valueCtx) Value(key interface{}) interface{} {
-  if c.key == key {
-    return c.val
-  }
-  return c.Context.Value(key)
+	if c.key == key {
+		return c.val
+	}
+	return c.Context.Value(key)
 }
 ```
 
@@ -88,7 +88,7 @@ func (c *valueCtx) Value(key interface{}) interface{} {
 
 ```go
 func (*emptyCtx) Value(key interface{}) interface{} {
-  return nil
+	return nil
 }
 ```
 
