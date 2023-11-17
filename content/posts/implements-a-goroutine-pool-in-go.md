@@ -1,7 +1,7 @@
 +++
 title = "Golang 实现一个协程池 – rulego/fasthttp workerpool 源码介绍"
 author = ["vuri"]
-lastmod = 2023-11-13T23:26:34+08:00
+lastmod = 2023-11-17T01:25:04+08:00
 tags = ["golang"]
 draft = false
 +++
@@ -12,7 +12,6 @@ draft = false
 
 - [为什么要使用 goroutine 协程池](#为什么要使用-goroutine-协程池)
 - [如何实现一个简易 goroutine 协程池](#如何实现一个简易-goroutine-协程池)
-- [Translating](#translating)
 
 </div>
 <!--endtoc-->
@@ -333,10 +332,3 @@ Refs:
 -   [fasthttp workerpool](https://github.com/valyala/fasthttp/blob/master/workerpool.go)
 -   [rulego workerpool](https://github.com/rulego/rulego/blob/main/pool/workerpool.go)
 -   [ants: a high-performance and low-cost goroutine pool](https://github.com/panjf2000/ants)
-
-:export_file_name: draft-list
-
-
-## Translating {#translating}
-
--   [when-to-use-rust-when-to-use-golang](https://blog.logrocket.com/when-to-use-rust-when-to-use-golang)

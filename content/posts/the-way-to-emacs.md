@@ -1,7 +1,7 @@
 +++
 title = "Emacs 之路"
 author = ["vuri"]
-lastmod = 2023-11-16T21:39:20+08:00
+lastmod = 2023-11-17T10:49:12+08:00
 tags = ["emacs"]
 categories = ["emacs"]
 draft = false
@@ -11,7 +11,7 @@ draft = false
 
 <div class="heading">Table of Contents</div>
 
-- [[Deprecated] Setup with spacemacs](#deprecated-setup-with-spacemacs)
+- [[Deprecated] Setup with Spacemacs](#deprecated-setup-with-spacemacs)
 - [Setup with Doomemacs](#setup-with-doomemacs)
     - [配置使用 chemacs2(可选但是推荐)](#配置使用-chemacs2--可选但是推荐)
     - [安装 doomemacs](#安装-doomemacs)
@@ -31,7 +31,7 @@ draft = false
 <!--endtoc-->
 
 
-## [Deprecated] Setup with spacemacs {#deprecated-setup-with-spacemacs}
+## [Deprecated] Setup with Spacemacs {#deprecated-setup-with-spacemacs}
 
 ```shell
   # 下载 emacs
@@ -60,9 +60,9 @@ draft = false
 
 ## Setup with Doomemacs {#setup-with-doomemacs}
 
-[Doomemacs](https://github.com/doomemacs/doomemacs): About An Emacs framework for the stubborn martian hacker
+[Doomemacs](https://github.com/doomemacs/doomemacs): About An Emacs framework for the stubborn martian hacker.
 
-> 为什么要使用 Doom?
+> 为什么要使用 Doomemacs?
 
 1.  它真的很快: 得益于它的结构设计和懒加载,比其他框架快很多;
 2.  比较接近原生: 接近原生的好处是上手更好理解和体验,不需要你过多了解框架的内容(~~spacemacs~~);
@@ -127,8 +127,26 @@ $ emacs --with-profile spacemacs
 
 ### 安装 doomemacs {#安装-doomemacs}
 
-```shell
+安装方式可以参考官方的:[doomemacs#Install](https://github.com/doomemacs/doomemacs#install),根据个人习惯我进行了一些调整:
 
+```shell
+# clone the repo.
+$ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/dotfiles/.doomemacs.d
+# exports the bin path.
+$ echo 'export PATH="$HOME/dotfiles/doomemacs.d/bin:$PATH"' >> ~/.aliases && source ~/.aliases
+# install the deps.
+$ doom install
+$ mv ~/.doom.d ~/dotfiles/.doom.d
+$ ln -s $HOME/dotfiles/.doom.d $HOME/.doom.d
+```
+
+添加如下内容到 `~/.emacs-profiles.el` 中:
+
+```emacs-lisp
+(("default"   . ((user-emacs-directory . "~/dotfiles/doomemacs.d/")))
+ ("spacemacs"   . ((user-emacs-directory . "~/dotfiles/spacemacs.d/")))
+ ("doom"   . ((user-emacs-directory . "~/dotfiles/doomemacs.d/")))
+ ("legacy"   . ((user-emacs-directory . "~/dotfiles/.emacs.legacy/"))))
 ```
 
 

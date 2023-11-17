@@ -8,7 +8,7 @@
 :export_hugo_section: posts
 :end:
 
-** Done 使用 net/http 启动一个 web server                          :@golang:
+** DONE 使用 net/http 启动一个 web server                          :@golang:
 :properties:
 :export_file_name: golang-net-http-server
 :export_date: 2020-08-29
@@ -763,13 +763,7 @@ Refs:
 - [[https://github.com/rulego/rulego/blob/main/pool/workerpool.go][rulego workerpool]]
 - [[https://github.com/panjf2000/ants][ants: a high-performance and low-cost goroutine pool]]
 
-:properties:
-:export_file_name: draft-list
-:end:
-
-*** Translating
-- [[https://blog.logrocket.com/when-to-use-rust-when-to-use-golang][when-to-use-rust-when-to-use-golang]]
-** Setup My Blog with Hugo and Org Mode                :@emacs:emacs:orgmode:
+** Setup My Blog with Hugo and Org Mode :@emacs:emacs:orgmode:
 :properties:
 :export_file_name: setup-my-blog-with-hugo-and-org-mode
 :end:
@@ -937,7 +931,7 @@ file:static/images/hello-world.png
 :export_file_name: the-way-to-emacs
 :end:
 
-*** [Deprecated] Setup with spacemacs
+*** [Deprecated] Setup with Spacemacs
 
 #+begin_src shell
   # 下载 emacs
@@ -965,10 +959,10 @@ file:static/images/hello-world.png
 
 *** Setup with Doomemacs
 
-[[https://github.com/doomemacs/doomemacs][Doomemacs]]: About An Emacs framework for the stubborn martian hacker
+[[https://github.com/doomemacs/doomemacs][Doomemacs]]: About An Emacs framework for the stubborn martian hacker.
 
 #+begin_quote
-为什么要使用 Doom?
+为什么要使用 Doomemacs?
 #+end_quote
 
 1. 它真的很快: 得益于它的结构设计和懒加载,比其他框架快很多;
@@ -1034,7 +1028,26 @@ $ emacs --with-profile spacemacs
 
 **** 安装 doomemacs
 
+安装方式可以参考官方的:[[https://github.com/doomemacs/doomemacs#install][doomemacs#Install]],根据个人习惯我进行了一些调整:
+
 #+begin_src shell
+# clone the repo.
+$ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/dotfiles/.doomemacs.d
+# exports the bin path.
+$ echo 'export PATH="$HOME/dotfiles/doomemacs.d/bin:$PATH"' >> ~/.aliases && source ~/.aliases
+# install the deps.
+$ doom install
+$ mv ~/.doom.d ~/dotfiles/.doom.d
+$ ln -s $HOME/dotfiles/.doom.d $HOME/.doom.d
+#+end_src
+
+添加如下内容到 =~/.emacs-profiles.el= 中:
+
+#+begin_src emacs-lisp
+(("default"   . ((user-emacs-directory . "~/dotfiles/doomemacs.d/")))
+ ("spacemacs"   . ((user-emacs-directory . "~/dotfiles/spacemacs.d/")))
+ ("doom"   . ((user-emacs-directory . "~/dotfiles/doomemacs.d/")))
+ ("legacy"   . ((user-emacs-directory . "~/dotfiles/.emacs.legacy/"))))
 #+end_src
 
 *** Org mode
