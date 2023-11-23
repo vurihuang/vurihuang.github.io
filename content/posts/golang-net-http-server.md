@@ -2,7 +2,7 @@
 title = "使用 net/http 启动一个 web server"
 author = ["vuri"]
 date = 2020-08-29
-lastmod = 2023-11-16T21:42:01+08:00
+lastmod = 2023-11-19T10:49:29+08:00
 categories = ["golang"]
 draft = false
 +++
@@ -48,8 +48,8 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 ```go
 func ListenAndServe(addr string, handler Handler) error {
-    server := &Server{Addr: addr, Handler: handler}
-    return server.ListenAndServe()
+	server := &Server{Addr: addr, Handler: handler}
+	return server.ListenAndServe()
 }
 ```
 

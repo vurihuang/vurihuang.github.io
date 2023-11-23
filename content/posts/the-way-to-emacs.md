@@ -1,7 +1,7 @@
 +++
 title = "Emacs 之路"
 author = ["vuri"]
-lastmod = 2023-11-17T10:49:12+08:00
+lastmod = 2023-11-17T14:23:26+08:00
 tags = ["emacs"]
 categories = ["emacs"]
 draft = false

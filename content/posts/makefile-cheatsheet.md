@@ -1,7 +1,7 @@
 +++
 title = "Makefile 速查表"
 author = ["vuri"]
-lastmod = 2023-11-13T23:37:40+08:00
+lastmod = 2023-11-23T03:43:38+08:00
 tags = ["cheatsheet"]
 draft = false
 +++

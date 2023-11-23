@@ -1,0 +1,20 @@
+#+hugo_base_dir: ..
+#+hugo_section: posts
+#+hugo_auto_set_lastmod: t
+
+#+options: toc:2
+
+* TODO 从零开始写一个 Go 解析器 :golang:trans:
+:properties:
+:export_file_name: writing-an-interpreter-in-go
+:end:
+
+原文: [[https://edu.anarcho-copy.org/Programming%20Languages/Go/writing%20an%20INTERPRETER%20in%20go.pdf][writing an interpreter in go]]
+
+** Introduction
+
+** 1. Lexing
+** 2. Parsing
+** 3. Evaluation
+** 4. Extending the Interpreter
+** Resources

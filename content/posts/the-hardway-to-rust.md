@@ -1,7 +1,7 @@
 +++
 title = "The hardway to Rust"
 author = ["vuri"]
-lastmod = 2023-11-15T09:34:13+08:00
+lastmod = 2023-11-17T14:22:37+08:00
 tags = ["Rust"]
 draft = true
 +++
