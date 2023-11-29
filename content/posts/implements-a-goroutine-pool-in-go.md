@@ -1,8 +1,9 @@
 +++
 title = "Golang 实现一个协程池 – rulego/fasthttp workerpool 源码介绍"
 author = ["vuri"]
-lastmod = 2023-11-17T01:25:04+08:00
+lastmod = 2023-11-25T11:22:48+08:00
 tags = ["golang"]
+categories = ["golang"]
 draft = false
 +++
 

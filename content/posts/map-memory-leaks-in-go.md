@@ -3,7 +3,7 @@ title = """
   探究 Go map "内存泄露"
   """
 author = ["vuri"]
-lastmod = 2023-11-25T11:16:59+08:00
+lastmod = 2023-11-27T09:40:33+08:00
 tags = ["golang", "Trans"]
 categories = ["golang"]
 draft = false
@@ -131,7 +131,7 @@ type hmap struct {
 
 ## 是不是内存泄露？ {#是不是内存泄露}
 
-正如reddit 这篇评论所谈论的 [maps_and_memory_leaks_in_go](https://www.reddit.com/r/golang/comments/xq6lm8/maps_and_memory_leaks_in_go/) ，到底是不是“内存泄露”是个问题。大概有以下几个视角：
+正如 reddit 这篇评论所谈论的 [maps_and_memory_leaks_in_go](https://www.reddit.com/r/golang/comments/xq6lm8/maps_and_memory_leaks_in_go/) ，到底是不是“内存泄露”是个问题。大概有以下几个视角：
 
 1.  是优化，重用时不需要分配新的桶；
 2.  内存泄露通常被定义为通过某种方式失去了对已分配的内存的引用，从而导致无法释放，在这个场景下清理了 map 仍然能释放内存空间；

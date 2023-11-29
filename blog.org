@@ -8,7 +8,7 @@
 :export_hugo_section: posts
 :end:
 
-** DONE 使用 net/http 启动一个 web server                          :@golang:
+** DONE 使用 net/http 启动一个 web server :@golang:golang:
 :properties:
 :export_file_name: golang-net-http-server
 :export_date: 2020-08-29
@@ -339,7 +339,7 @@ func (mux *ServeMux) match(path string) (h Handler, pattern string) {
 }
 #+end_src
 
-** DONE Golang Context with value                                 :@golang:
+** DONE Golang Context with value :@golang:golang:
 :properties:
 :export_file_name: golang-context-with-value
 :export_date: 2020-08-20
@@ -439,7 +439,7 @@ WithValue returns a copy of parent in which the value associated with key is val
 Use context Values only for request-scoped data that transits processes and APIs, not for passing optional parameters to functions.
 #+end_src
 
-** DONE Golang 实现一个协程池 -- rulego/fasthttp workerpool 源码介绍 :golang:
+** DONE Golang 实现一个协程池 -- rulego/fasthttp workerpool 源码介绍 :golang:@golang:
 :properties:
 :export_file_name: implements-a-goroutine-pool-in-go
 :end:
@@ -1516,7 +1516,7 @@ type hmap struct {
 
 *** 是不是内存泄露？
 
-正如reddit 这篇评论所谈论的 [[https://www.reddit.com/r/golang/comments/xq6lm8/maps_and_memory_leaks_in_go/][maps_and_memory_leaks_in_go]] ，到底是不是“内存泄露”是个问题。大概有以下几个视角：
+正如 reddit 这篇评论所谈论的 [[https://www.reddit.com/r/golang/comments/xq6lm8/maps_and_memory_leaks_in_go/][maps_and_memory_leaks_in_go]] ，到底是不是“内存泄露”是个问题。大概有以下几个视角：
 
 1. 是优化，重用时不需要分配新的桶；
 2. 内存泄露通常被定义为通过某种方式失去了对已分配的内存的引用，从而导致无法释放，在这个场景下清理了 map 仍然能释放内存空间；
